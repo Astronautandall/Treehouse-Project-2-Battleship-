@@ -30,7 +30,7 @@ def main():
 
     player2.set_fleet()
     Handler.clear_screen()
-  
+
     input("All set. LET'S PLAY!\nPress ENTER to continue")
 
     Handler.clear_screen()

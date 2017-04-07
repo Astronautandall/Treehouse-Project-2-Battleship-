@@ -21,11 +21,10 @@ class Ship:
 
         return "{name}, Size: {size}, {coords}, {direction}".format(**ship)
 
-
     def hit(self, coord):
 
-        """ 
-        Takes a hit on the ship and returns a boolean 
+        """
+        Takes a hit on the ship and returns a boolean
         with True if the ship has sunked and False if not
         """
         sunk = False
@@ -36,4 +35,4 @@ class Ship:
             sunk = True
             self.sunk = sunk
 
-        return sunk            
+        return sunk

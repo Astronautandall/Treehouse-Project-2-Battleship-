@@ -8,7 +8,7 @@ from position import Position
 
 class Player:
 
-    def __init__(self,message):
+    def __init__(self, message):
 
         self.board = Board()
         self.ships = []
@@ -20,15 +20,14 @@ class Player:
             name = input('>').strip()
 
             if not name:
-                print('Please enter a valid name blank spaces are not allowed')
-                input('Press enter to try again')
+                print('Please write a valid name blank spaces are not allowed')
+                input('Press ENTER to try again')
                 Handler.clear_screen()
                 continue
 
             else:
                 self.name = name
                 break
-        
 
     def set_fleet(self):
 
@@ -53,7 +52,7 @@ class Player:
                 coord = Position.create_coord()
 
                 if not coord:
-                    input("Press enter to try again")
+                    input("Press ENTER to try again")
                     continue
 
                 row, column = coord
@@ -61,7 +60,7 @@ class Player:
                 # Checking if the coord the user entered has already a ship
                 if self.board.grid[row][column].ship:
                     print("Error: There's already a ship at that coord")
-                    input("Press enter to try again")
+                    input("Press ENTER to try again")
                     continue
 
                 # Asking for the ship direction
@@ -69,15 +68,15 @@ class Player:
 
                     Handler.clear_screen()
                     self.board.player_view(self)
-                    print("Place: '{}', Length: {}".format(ship_name, ship_size))
+                    print("Place: '{}', Length: {}"
+                          .format(ship_name, ship_size))
                     direction = Position.get_direction()
 
                     if not direction:
-                        input("Press enter to try again")
+                        input("Press ENTER to try again")
                         continue
                     else:
                         break
-
 
                 # If the player wants to put the ship horizontally
                 # the changing number in the coord would be the column
@@ -88,7 +87,7 @@ class Player:
                 # Very straight forward. We subtract the axis from the
                 # board to see if there is enough space to place the ship.
                 # Let's say the user wants to put a 5 places lenght ship
-                # horizontally  starting on (8,0) and our board is a 10x10 grid,
+                # horizontally  starting on (8,0) and our board is a 10x10 grid
                 # the ship will ocuppy  (8,0)(9,0)(10,0),(11,0)(12,0).
                 # This is wrong. So we take the axis and substract
                 # it to the BOARD_SIZE. In our example is 10 - 8, and then
@@ -97,12 +96,12 @@ class Player:
                 if Constants.BOARD_SIZE - axis < ship_size:
 
                     print("The ship don't fit.")
-                    input("Press enter to try again")
+                    input("Press ENTER to try again")
                     continue
 
                 else:
 
-                    # If nothing wrong, a dict with the ship is created, to send
+                    # If nothing wrong a dict with the ship is created, to send
                     # it to Board.place_ship where it would be proccessed
                     ship = {
                         'ship': (ship_name, ship_size),
@@ -115,7 +114,7 @@ class Player:
                     if Board.place_ship(**ship):
                         break
                     else:
-                        input('Press enter to try again continue')
+                        input('Press ENTER to try again continue')
                         continue
 
         Handler.clear_screen()
@@ -137,14 +136,14 @@ class Player:
 
     def turn(self, opponent):
 
-        """ 
+        """
         This functions let's the user take a turn to guess
 
         Args:
             opponent -> The other player object
         """
 
-        input("{}'s turn. Press enter to continue".format(self.name))
+        input("{}'s turn. Press ENTER to continue".format(self.name))
 
         while True:
 
@@ -155,17 +154,18 @@ class Player:
             coord = Position.create_coord()
 
             # This will be invalid if something is wrong with the coord entered
-            # more info in the function
+            # more info in the function. The error is displayed
+            # if some in the call of the function before
             if not coord:
-                input('Press enter to try again')
+                input('Press ENTER to try again')
                 continue
 
             # Check if the user already wrote that coord
             if coord in self.guesses:
                 print('Ops! You already tried that coord')
-                input('Press enter to try again')
+                input('Press ENTER to try again')
                 continue
-        
+
             row, column = coord
 
             # Creating a reference to the opponents board cell for ease of use
@@ -179,15 +179,17 @@ class Player:
 
                 if sunk:
 
-                    # Loop through each coord of the ship to change the status of 
-                    # the cells to SUNK
+                    # Loop through each coord of the ship to change the status
+                    # of the cells to SUNK
                     for row, column in cell.ship.coords:
-                        opponent.board.grid[row][column].status = Constants.SUNK
+                        cell = opponent.board.grid[row][column]
+                        cell.status = Constants.SUNK
 
                     Handler.clear_screen()
                     Board.print_boards(self, opponent)
-                    print("OMG {}. You sunk one of {}'s ships!".format(self.name,opponent.name))
-                    
+                    print("OMG {}. You sunk one of {}'s ships!"
+                          .format(self.name, opponent.name))
+
                 else:
 
                     # If ship not sunk yet, adding a hit only at this position
@@ -195,14 +197,13 @@ class Player:
                     Handler.clear_screen()
                     Board.print_boards(self, opponent)
                     print("Outstanding {}. You hitted!".format(self.name))
-                
 
             else:
 
                 cell.status = Constants.MISS
 
                 Handler.clear_screen()
-                Board.print_boards(self, opponent)            
+                Board.print_boards(self, opponent)
                 print("Ops {}, you've missed".format(self.name))
 
             # Saving the coord in the player guesses for furter comparisons

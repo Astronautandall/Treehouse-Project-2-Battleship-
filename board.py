@@ -60,7 +60,6 @@ class Board:
         player.board.player_view(player)
         Handler.print_legend()
 
-
     def print_final_boards(player1, player2):
 
         player1.board.player_view(player1)
@@ -71,8 +70,8 @@ class Board:
 
         """
         Puts a ship on starting on the desired coord
-        and direction. Returns True is everything is ok 
-        False if ship overlaps with 
+        and direction. Returns True is everything is ok
+        False if ship overlaps with
         existing ships
         """
 

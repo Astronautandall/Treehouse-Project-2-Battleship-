@@ -63,7 +63,8 @@ class Position:
             try:
                 row = int(coord[1:])
             except ValueError:
-                print('Error: Second part of the coord should be a whole number')
+                print('Error: Second part of the coord should be a '
+                      'whole number')
                 row = None
                 response = False
             else:
@@ -142,14 +143,14 @@ class Position:
 
     def get_direction():
 
-        """ 
-        Ask the user to prompt the direction in which 
+        """
+        Ask the user to prompt the direction in which
         the ship should be placed
 
         Returns eiter the direction if its valid or False
         """
-
-        direction = input('Place ship [V]ertical or [H]orizontal: ').lower().strip()
+        message = 'Place ship [V]ertical or [H]orizontal: '
+        direction = input(message).lower().strip()
 
         if direction == 'v' or direction == 'h':
             return direction

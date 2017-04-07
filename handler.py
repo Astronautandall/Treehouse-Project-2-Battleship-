@@ -4,5 +4,5 @@ class Handler:
         print("\033c", end="")
 
     def print_legend():
-    	"""Print legend of board symbols"""
-    	print("Legend: Ships(| or -) Empty(O) Miss(.) Hit(*) Sunk(#)")
+        """Print legend of board symbols"""
+        print("Legend: Ships(| or -) Empty(O) Miss(.) Hit(*) Sunk(#)")
